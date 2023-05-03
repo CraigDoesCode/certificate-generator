@@ -25,6 +25,7 @@ export class AppService {
       ),
     );
     doc.image('src/assets/images/cert.png', 0, 0, { width: 841 });
+    doc.text('Hello world!');
 
     doc.end();
 
