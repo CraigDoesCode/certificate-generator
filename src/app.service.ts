@@ -1,22 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import * as PDFDocument from 'pdfkit';
-import fs from 'fs';
+import * as fs from 'fs';
 
 @Injectable()
 export class AppService {
   getHello(): string {
     const player = 'craig';
     const certDate = new Date();
+    const ss = String(certDate.getSeconds());
     const dd = String(certDate.getDate()).padStart(2, '0');
     const mm = String(certDate.getMonth() + 1).padStart(2, '0');
     const yyyy = certDate.getFullYear();
-    const date = mm + '/' + dd + '/' + yyyy;
+    const fileDate = `${ss}_${dd}_${mm}_${yyyy}`;
+    const date = `${mm}/${dd}/${yyyy}`;
 
     const doc = new PDFDocument({
       layout: 'landscape',
       size: 'A4',
     });
-    doc.image('src/assets/images/cert.png', { fit: [100, 100] });
+
+    doc.pipe(
+      fs.createWriteStream(
+        `certificates/${fileDate}_${player}_certificate.pdf`,
+      ),
+    );
+    doc.image('src/assets/images/cert.png', 0, 0, { width: 841 });
+
+    doc.end();
 
     // const doc = new jsPDF({
     //   orientation: 'landscape',
