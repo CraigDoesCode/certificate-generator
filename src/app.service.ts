@@ -5,7 +5,7 @@ import * as fs from 'fs';
 @Injectable()
 export class AppService {
   getHello(): string {
-    const player = 'craig';
+    const player = 'Craig Alexander Bernard Norford';
     const certDate = new Date();
     const ss = String(certDate.getSeconds());
     const dd = String(certDate.getDate()).padStart(2, '0');
@@ -25,7 +25,15 @@ export class AppService {
       ),
     );
     doc.image('src/assets/images/cert.png', 0, 0, { width: 841 });
-    doc.text('Hello world!');
+    doc.fontSize(48);
+    doc
+      .font('src/assets/fonts/parisienne-regular.ttf')
+      .text(`${player}`, 450, 270, { width: 300, align: 'center' });
+
+    doc.fontSize(24);
+    doc
+      .font('Helvetica-Oblique')
+      .text(`${date}`, 520, 420, { width: 300, align: 'center' });
 
     doc.end();
 
